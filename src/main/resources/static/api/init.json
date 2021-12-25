@@ -1,0 +1,82 @@
+{
+  "homeInfo": {
+    "title": "System Management",
+    "href": "pages/welcome.html"
+  },
+  "logoInfo": {
+    "title": "Backstage Management",
+    "image": "images/logo.png",
+    "href": ""
+  },
+  "menuInfo": [
+    {
+      "title": "General Management",
+      "icon": "fa fa-address-book",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "Department Management",
+          "href": "dept",
+          "icon": "fa fa-window-maximize",
+          "target": "_self"
+        },
+        {
+          "title": "User Management",
+          "href": "user",
+          "icon": "fa fa-window-maximize",
+          "target": "_self"
+        },
+		
+        {
+          "title": "Menu Management",
+          "href": "menu",
+          "icon": "fa fa-window-maximize",
+          "target": "_self"
+        },
+        {
+          "title": "Role Management",
+          "href": "role",
+          "icon": "fa fa-window-maximize",
+          "target": "_self"
+        },
+
+        {
+          "title": "Exception Page",
+          "href": "",
+          "icon": "fa fa-home",
+          "target": "_self",
+          "child": [
+            {
+              "title": "404 Page",
+              "href": "page/404.html",
+              "icon": "fa fa-hourglass-end",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "Other Interfaces",
+          "href": "",
+          "icon": "fa fa-snowflake-o",
+          "target": "",
+          "child": [
+            {
+              "title": "Button Example",
+              "href": "page/button.html",
+              "icon": "fa fa-snowflake-o",
+              "target": "_self"
+            },
+            {
+              "title": "Pop-up Layer",
+              "href": "page/layer.html",
+              "icon": "fa fa-shield",
+              "target": "_self"
+            }
+          ]
+        }
+      ]
+    }
+
+  ]
+}

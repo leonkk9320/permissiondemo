@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leonkk.dao.IUserDao">
+
+
+    <select id="queryUserAll" parameterType="com.leonkk.po.User" resultType="com.leonkk.po.User">
+        select u.id,u.realname,u.username,u.sex,u.tel,u.`status`,d.`name` as dname
+        from user u left join dept d on u.dept_id=d.id
+        <where>
+            <if test="username!=null and username!=''">
+                and username like '%${username}%'
+            </if>
+            <if test="tel!=null and tel!=''">
+                and tel like '%${tel}%'
+            </if>
+        </where>
+         order by id desc
+    </select>
+
+
+    <!--用户的添加-->
+    <insert id="addUser" parameterType="com.leonkk.po.User">
+        <!--获取新增记录的id-->
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            select last_insert_id()
+        </selectKey>
+        insert into user(dept_id,username,realname,sex,tel,email,job_title,status,sort,password)values
+        (#{deptId},#{username},#{realname},#{sex},#{tel},#{email},#{jobTitle},#{status},#{sort},'123456')
+    </insert>
+
+    <!--用户和角色关联关系-->
+    <insert id="addUserRole" parameterType="com.leonkk.po.UserRole">
+         insert into user_role(role_id,user_id)values
+         <foreach collection="list" item="userRole" separator="," index="index">
+             (#{userRole.roleId},#{userRole.userId})
+         </foreach>
+    </insert>
+
+    <!--批量删除功能-->
+    <delete id="deleteUserByIds" parameterType="list">
+        delete from user where id in
+        <foreach collection="list" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
+    <!--删除用户关联到的用户角色信息-->
+    <delete id="deleteUserRoleByUserIds" parameterType="list">
+        delete from user_role where user_id in
+        <foreach collection="list" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
+    <!--根据用户的id查询用户信息-->
+    <select id="queryUserById" parameterType="int" resultType="com.leonkk.po.User">
+        select * from user where id=#{id}
+    </select>
+
+    <!--修改功能-->
+    <update id="updateUserSubmit" parameterType="com.leonkk.po.User">
+        update user
+        <set>
+        <if test="username!=null and username!=''">
+            username =#{username},
+        </if>
+        <if test="realname!=null and realname!=''">
+            realname =#{realname},
+        </if>
+        <if test="sex!=null and sex!=''">
+            sex =#{sex},
+        </if>
+        <if test="tel!=null and tel!=''">
+            tel =#{tel},
+        </if>
+        <if test="email!=null and email!=''">
+            email =#{email},
+        </if>
+        <if test="status!=null and status!=''">
+            status =#{status}
+        </if>
+        </set>
+        where id=#{id}
+
+    </update>
+
+
+    <!--根据用户名密码查询用户对象-->
+   <select id="queryUserInfoByNameAndPwd" resultType="com.leonkk.po.User">
+       select * from user where username=#{username} and password=#{password}
+   </select>
+
+</mapper>
